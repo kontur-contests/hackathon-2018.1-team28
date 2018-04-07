@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using UnityEngine;
 
 namespace Assets.scripts.Weapons
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "UnassignedField.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class Pistol : MonoBehaviour, IWeapon
     {
         public GameObject Bullet;

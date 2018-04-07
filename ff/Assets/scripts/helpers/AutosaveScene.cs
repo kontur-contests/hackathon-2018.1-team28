@@ -1,11 +1,13 @@
 ﻿#if UNITY_EDITOR
 
+using System.Diagnostics.CodeAnalysis;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
 namespace Assets.scripts.Helpers
 {
     [InitializeOnLoad]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class AutosaveScene
     {
         static AutosaveScene()
