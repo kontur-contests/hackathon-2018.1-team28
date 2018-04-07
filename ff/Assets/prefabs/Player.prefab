@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpeed: 0.2
-  Bullet: {fileID: 1198840363044094, guid: 2f283162d6dc362438fe4ac1f489da57, type: 2}
+  Weapon: {fileID: 1289581576073382, guid: 4224e9a86d7616b4389362e5ac9b2d41, type: 2}
 --- !u!212 &212644328774861474
 SpriteRenderer:
   m_ObjectHideFlags: 1

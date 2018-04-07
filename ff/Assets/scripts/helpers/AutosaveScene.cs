@@ -3,7 +3,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace Assets.scripts.helpers
+namespace Assets.scripts.Helpers
 {
     [InitializeOnLoad]
     public class AutosaveScene

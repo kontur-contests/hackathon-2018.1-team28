@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using Assets.scripts.helpers;
+using Assets.scripts.Helpers;
+using Assets.scripts.Weapons;
 using UnityEngine;
 
 namespace Assets.scripts
@@ -10,17 +12,19 @@ namespace Assets.scripts
     public class PlayerController : MonoBehaviour
     {
         private const float Epsilon = 0.001f;
+        private bool _canShot;
+        private Vector3 _mouseOnScreen;
         private float _moveX;
         private float _moveY;
-        private Transform _trans;
-        private Vector3 _positionOnScreen;
-        private Vector3 _mouseOnScreen;
         private bool _moving;
+        private Vector3 _positionOnScreen;
         private bool _rotating;
         private AudioSource _steps;
+        private Transform _trans;
+        private IWeapon _weapon;
 
         public float PlayerSpeed;
-        public GameObject Bullet;
+        public GameObject Weapon;
 
         private void Awake()
         {
@@ -28,6 +32,8 @@ namespace Assets.scripts
             _steps = GetComponent<AudioSource>();
             _moving = false;
             _rotating = false;
+            _canShot = true;
+            _weapon = Weapon.GetComponent<IWeapon>();
         }
 
         private void Update()
@@ -50,7 +56,7 @@ namespace Assets.scripts
         {
             Move();
             Rotate();
-            Shoot();
+            CheckShoot();
         }
 
         private void Rotate()
@@ -64,17 +70,28 @@ namespace Assets.scripts
             _trans.position = _trans.position.AddValueXY(_moveX, _moveY);
         }
 
-        private void Shoot()
+        private void CheckShoot()
         {
             if (!Input.GetMouseButton(0)) return;
 
-            var bullet = Instantiate(Bullet);
+            if (_canShot)
+                StartCoroutine(Shoot());
+        }
+
+        public IEnumerator Shoot()
+        {
+            var bulletPref = _weapon.GetBullet();
+            var bullet = Instantiate(bulletPref);
             var bulletController = bullet.GetComponent<BulletController>();
             bulletController.transform.position = transform.position;
 
             var shootVector = new Vector3(_mouseOnScreen.x - _positionOnScreen.x,
                 _mouseOnScreen.y - _positionOnScreen.y, 0);
             bulletController.ShootAngle = Vector3.Normalize(shootVector);
+
+            _canShot = false;
+            yield return new WaitForSeconds(_weapon.GetFireDelay());
+            _canShot = true;
         }
     }
 }
