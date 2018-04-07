@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1198840363044094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.41, y: 1.28, z: 0}
+  m_LocalPosition: {x: -7.3616915, y: -1.5427387, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4093392456799302}
@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8178bd2675d4094c9a1e1d357570cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxLifetime: 30
+  MaxLifetime: 3
   ShootAngle: {x: 1, y: 1, z: 0}
-  Speed: 1
+  Speed: 0.25
   Damage: 1
 --- !u!212 &212337633990128096
 SpriteRenderer:

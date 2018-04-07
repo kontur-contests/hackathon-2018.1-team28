@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - player_steps_sound
-  - player_die_scream
+  - dead
+  - alive
+  - bulletSpawn
   layers:
   - Default
   - TransparentFX
