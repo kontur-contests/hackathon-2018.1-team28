@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Assets.scripts.Helpers;
 using Assets.scripts.Weapons;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         private const float Epsilon = 0.001f;
         private bool _canShot;
@@ -21,9 +22,12 @@ namespace Assets.scripts
         private bool _moving;
         private Vector3 _positionOnScreen;
         private bool _rotating;
-        private AudioSource _steps;
+        private bool _alive;
+        private AudioSource _stepsSound;
+        private AudioSource _dieScream;
         private Transform _trans;
         private IWeapon _weapon;
+        private PlayerData _playerData;
 
         public float PlayerSpeed;
         public GameObject Weapon;
@@ -31,11 +35,17 @@ namespace Assets.scripts
         private void Awake()
         {
             _trans = transform;
-            _steps = GetComponent<AudioSource>();
+            var audioSources = GetComponentsInChildren<Transform>();
+            _stepsSound = audioSources.FirstOrDefault(tr => tr.CompareTag("player_steps_sound"))?.GetComponent<AudioSource>();
+            _dieScream = audioSources.FirstOrDefault(tr => tr.CompareTag("player_die_scream"))?.GetComponent<AudioSource>();
             _weapon = Weapon.GetComponent<IWeapon>();
+            _playerData = GetComponent<PlayerData>();
             _moving = false;
             _rotating = false;
             _canShot = true;
+            _alive = true;
+
+            //Invoke(nameof(Die), 1);
         }
 
         private void Update()
@@ -51,14 +61,25 @@ namespace Assets.scripts
             _rotating = Math.Abs(Input.GetAxis("Mouse X")) > Epsilon || Math.Abs(Input.GetAxis("Mouse Y")) > Epsilon;
 
             // steps sound
-            _steps.mute = !(_moving || _rotating);
+            _stepsSound.mute = !(_moving || _rotating);
         }
 
         private void FixedUpdate()
         {
+            if (!_alive)
+                return;
+
+            CheckAlive();
+            CheckShoot();
             Move();
             Rotate();
-            CheckShoot();
+        }
+
+        private void CheckAlive()
+        {
+            if (_playerData.IsAlive)
+                return;
+            Die();
         }
 
         private void Rotate()
@@ -95,6 +116,29 @@ namespace Assets.scripts
             _canShot = false;
             yield return new WaitForSeconds(_weapon.GetFireDelay());
             _canShot = true;
+        }
+
+        public void GetDamage(int damage)
+        {
+            _playerData.HealthPoint -= damage;
+        }
+
+        public void Die()
+        {
+            _alive = false;
+            _dieScream.Play();
+            SetDeadPic();
+            //StartCoroutine(Dying());
+        }
+
+        private void SetDeadPic()
+        {
+        }
+
+        private IEnumerator Dying()
+        {
+            yield return new WaitForSeconds(_dieScream.clip.length);
+            Destroy(gameObject);
         }
     }
 }

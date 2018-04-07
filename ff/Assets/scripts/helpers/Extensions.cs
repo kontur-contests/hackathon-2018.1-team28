@@ -12,6 +12,11 @@ namespace Assets.scripts.Helpers
             return new Vector3(newX, input.y, input.z);
         }
 
+        public static Vector3 ChangeY(this Vector3 input, float newY)
+        {
+            return new Vector3(input.x, newY ,input.z);
+        }
+
         public static Vector3 AddValue(this Vector3 input, float dx, float dy, float dz)
         {
             return new Vector3(input.x + dx, input.y + dy, input.z + dz);
