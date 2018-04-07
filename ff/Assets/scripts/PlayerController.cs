@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Assets.scripts.helpers;
 using UnityEngine;
 
 namespace Assets.scripts
@@ -19,8 +20,16 @@ namespace Assets.scripts
 
         private void Update()
         {
+            // move
             _moveX = Input.GetAxis("Horizontal") * PlayerSpeed;
             _moveY = Input.GetAxis("Vertical") * PlayerSpeed;
+
+            // rotate
+            var positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+            var mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+            var angle = MathHelper.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+            transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         }
 
         private void FixedUpdate()
