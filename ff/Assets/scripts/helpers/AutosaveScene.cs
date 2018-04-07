@@ -16,9 +16,7 @@ namespace Assets.scripts.helpers
         private static void EditorApplication_playModeStateChanged(PlayModeStateChange obj)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
-            {
                 EditorSceneManager.SaveOpenScenes();
-            }
         }
     }
 }

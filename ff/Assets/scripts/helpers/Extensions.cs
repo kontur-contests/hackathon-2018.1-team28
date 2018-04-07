@@ -24,7 +24,8 @@ namespace Assets.scripts.helpers
             return new Vector3(input.x + dx, input.y + dy, input.z);
         }
 
-        public static Vector3 AddValueXYClamped(this Vector3 input, float dx, float dy, Vector2 maxValue, Vector2 minValue)
+        public static Vector3 AddValueXYClamped(this Vector3 input, float dx, float dy, Vector2 maxValue,
+            Vector2 minValue)
         {
             return new Vector3(
                 Mathf.Clamp(input.x + dx, minValue.x, maxValue.x),

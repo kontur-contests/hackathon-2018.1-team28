@@ -8,10 +8,14 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class PlayerController : MonoBehaviour
     {
-        public float PlayerSpeed;
+        private float _moveX;
+        private float _moveY;
         private Transform _trans;
-        private float _moveX = 0f;
-        private float _moveY = 0f;
+        private Vector3 _positionOnScreen;
+        private Vector3 _mouseOnScreen;
+
+        public float PlayerSpeed;
+        public GameObject Bullet;
 
         private void Awake()
         {
@@ -20,21 +24,40 @@ namespace Assets.scripts
 
         private void Update()
         {
-            // move
+            // calc move data
             _moveX = Input.GetAxis("Horizontal") * PlayerSpeed;
             _moveY = Input.GetAxis("Vertical") * PlayerSpeed;
 
-            // rotate
-            var positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-            var mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-            var angle = MathHelper.AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
-            transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            // calc rotate data
+            _mouseOnScreen = Input.mousePosition;
+            _mouseOnScreen.z = 5.23f; //The distance between the camera and object
+            _positionOnScreen = Camera.main.WorldToScreenPoint(_trans.position);
+            var angle = MathHelper.AngleBetweenTwoPoints(_mouseOnScreen, _positionOnScreen);
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private void FixedUpdate()
         {
+            Move();
+            Shoot();
+        }
+
+        private void Move()
+        {
             _trans.position = _trans.position.AddValueXY(_moveX, _moveY);
+        }
+
+        private void Shoot()
+        {
+            if (!Input.GetMouseButton(0)) return;
+
+            var bullet = Instantiate(Bullet);
+            var bulletController = bullet.GetComponent<BulletController>();
+            bulletController.transform.position = transform.position;
+
+            var shootVector = new Vector3(_mouseOnScreen.x - _positionOnScreen.x,
+                _mouseOnScreen.y - _positionOnScreen.y, 0);
+            bulletController.ShootAngle = Vector3.Normalize(shootVector);
         }
     }
 }
