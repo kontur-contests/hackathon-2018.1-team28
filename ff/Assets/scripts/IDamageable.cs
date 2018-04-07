@@ -1,6 +1,6 @@
 ﻿namespace Assets.scripts
 {
-    public interface IDamageble
+    public interface IDamageable
     {
         void GetDamage(int damage);
         void Die();

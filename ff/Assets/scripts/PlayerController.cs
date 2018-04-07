@@ -12,7 +12,7 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
-    public class PlayerController : MonoBehaviour, IDamageble
+    public class PlayerController : MonoBehaviour, IDamageable
     {
         private const float Epsilon = 0.001f;
         private bool _canShot;
@@ -22,6 +22,7 @@ namespace Assets.scripts
         private bool _moving;
         private Vector3 _positionOnScreen;
         private bool _rotating;
+        private bool _alive;
         private AudioSource _stepsSound;
         private AudioSource _dieScream;
         private Transform _trans;
@@ -42,6 +43,7 @@ namespace Assets.scripts
             _moving = false;
             _rotating = false;
             _canShot = true;
+            _alive = true;
 
             //Invoke(nameof(Die), 1);
         }
@@ -64,6 +66,9 @@ namespace Assets.scripts
 
         private void FixedUpdate()
         {
+            if (!_alive)
+                return;
+
             CheckAlive();
             CheckShoot();
             Move();
@@ -120,8 +125,14 @@ namespace Assets.scripts
 
         public void Die()
         {
+            _alive = false;
             _dieScream.Play();
-            StartCoroutine(Dying());
+            SetDeadPic();
+            //StartCoroutine(Dying());
+        }
+
+        private void SetDeadPic()
+        {
         }
 
         private IEnumerator Dying()

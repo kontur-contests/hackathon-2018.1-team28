@@ -13,6 +13,7 @@ namespace Assets.scripts
         public float MaxLifetime;
         public Vector3 ShootAngle;
         public float Speed;
+        public int Damage;
 
         private void Start()
         {
@@ -27,6 +28,12 @@ namespace Assets.scripts
         private void Destroy()
         {
             Destroy(gameObject);
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            var damagedObject = col.gameObject.GetComponent<IDamageable>();
+            damagedObject?.GetDamage(Damage);
         }
     }
 }
