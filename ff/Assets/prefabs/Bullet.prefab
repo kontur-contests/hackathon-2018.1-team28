@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxLifetime: 30
   ShootAngle: {x: 1, y: 1, z: 0}
-  Speed: 0
+  Speed: 1
   Damage: 1
 --- !u!212 &212337633990128096
 SpriteRenderer:
