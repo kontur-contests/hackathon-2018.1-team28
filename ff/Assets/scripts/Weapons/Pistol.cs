@@ -4,10 +4,17 @@ namespace Assets.scripts.Weapons
 {
     public class Pistol : MonoBehaviour, IWeapon
     {
-        public float FireDelay;
         public GameObject Bullet;
+        public float FireDelay;
 
-        public float GetFireDelay() => FireDelay;
-        public GameObject GetBullet() => Bullet;
+        public float GetFireDelay()
+        {
+            return FireDelay;
+        }
+
+        public GameObject GetBullet()
+        {
+            return Bullet;
+        }
     }
 }

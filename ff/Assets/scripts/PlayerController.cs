@@ -9,6 +9,8 @@ namespace Assets.scripts
 {
     [SuppressMessage("ReSharper", "UnassignedField.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class PlayerController : MonoBehaviour
     {
         private const float Epsilon = 0.001f;
@@ -30,10 +32,10 @@ namespace Assets.scripts
         {
             _trans = transform;
             _steps = GetComponent<AudioSource>();
+            _weapon = Weapon.GetComponent<IWeapon>();
             _moving = false;
             _rotating = false;
             _canShot = true;
-            _weapon = Weapon.GetComponent<IWeapon>();
         }
 
         private void Update()
@@ -72,7 +74,8 @@ namespace Assets.scripts
 
         private void CheckShoot()
         {
-            if (!Input.GetMouseButton(0)) return;
+            if (!Input.GetMouseButton(0))
+                return;
 
             if (_canShot)
                 StartCoroutine(Shoot());

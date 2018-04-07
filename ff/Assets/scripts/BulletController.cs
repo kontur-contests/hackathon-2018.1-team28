@@ -1,17 +1,22 @@
-﻿using System.Collections;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Assets.scripts
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "UnassignedField.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class BulletController : MonoBehaviour
     {
-        public Vector3 ShootAngle;
         public float MaxLifetime;
+        public Vector3 ShootAngle;
         public float Speed;
 
         private void Start()
         {
-            StartCoroutine(KillItSelf());
+            Invoke(nameof(Destroy), MaxLifetime);
         }
 
         private void FixedUpdate()
@@ -19,9 +24,8 @@ namespace Assets.scripts
             transform.position += ShootAngle * Speed;
         }
 
-        private IEnumerator KillItSelf()
+        private void Destroy()
         {
-            yield return new WaitForSeconds(MaxLifetime);
             Destroy(gameObject);
         }
     }
