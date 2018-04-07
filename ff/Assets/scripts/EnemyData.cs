@@ -8,11 +8,13 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnassignedField.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class PlayerData : MonoBehaviour
+    public class EnemyData : MonoBehaviour
     {
+        public int Damage;
         public int HealthPoint;
         public AudioClip MoveSound;
         public AudioClip DieSound;
+
         public bool IsAlive => HealthPoint > 0;
     }
 }

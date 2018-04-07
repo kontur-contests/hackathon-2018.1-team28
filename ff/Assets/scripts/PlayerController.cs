@@ -22,12 +22,15 @@ namespace Assets.scripts
         private bool _moving;
         private Vector3 _positionOnScreen;
         private bool _rotating;
-        private bool _alive;
-        private AudioSource _stepsSound;
-        private AudioSource _dieScream;
+        private bool IsAlive => _playerData.IsAlive;
+        private AudioSource _audio;
         private Transform _trans;
         private IWeapon _weapon;
         private PlayerData _playerData;
+
+        private GameObject _alivePic;
+        private GameObject _deadPic;
+        private GameObject _bulletSpawnPlace;
 
         public float PlayerSpeed;
         public GameObject Weapon;
@@ -35,21 +38,30 @@ namespace Assets.scripts
         private void Awake()
         {
             _trans = transform;
-            var audioSources = GetComponentsInChildren<Transform>();
-            _stepsSound = audioSources.FirstOrDefault(tr => tr.CompareTag("player_steps_sound"))?.GetComponent<AudioSource>();
-            _dieScream = audioSources.FirstOrDefault(tr => tr.CompareTag("player_die_scream"))?.GetComponent<AudioSource>();
-            _weapon = Weapon.GetComponent<IWeapon>();
+            _bulletSpawnPlace = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("bulletSpawn"))?.gameObject;
+            _alivePic = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("alive"))?.gameObject;
+            _deadPic = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("dead"))?.gameObject;
+            _deadPic?.SetActive(false);
+
             _playerData = GetComponent<PlayerData>();
+            _weapon = Weapon.GetComponent<IWeapon>();
+
+            _audio = GetComponent<AudioSource>();
+            _audio.clip = _playerData.MoveSound;
+            _audio.Play();
+
             _moving = false;
             _rotating = false;
             _canShot = true;
-            _alive = true;
 
             //Invoke(nameof(Die), 1);
         }
 
         private void Update()
         {
+            if (!IsAlive)
+                return;
+            
             // calc move data
             _moveX = Input.GetAxis("Horizontal") * PlayerSpeed;
             _moveY = Input.GetAxis("Vertical") * PlayerSpeed;
@@ -61,25 +73,17 @@ namespace Assets.scripts
             _rotating = Math.Abs(Input.GetAxis("Mouse X")) > Epsilon || Math.Abs(Input.GetAxis("Mouse Y")) > Epsilon;
 
             // steps sound
-            _stepsSound.mute = !(_moving || _rotating);
+            _audio.mute = !(_moving || _rotating);
         }
 
         private void FixedUpdate()
         {
-            if (!_alive)
+            if (!IsAlive)
                 return;
 
-            CheckAlive();
             CheckShoot();
             Move();
             Rotate();
-        }
-
-        private void CheckAlive()
-        {
-            if (_playerData.IsAlive)
-                return;
-            Die();
         }
 
         private void Rotate()
@@ -107,7 +111,9 @@ namespace Assets.scripts
             var bulletPref = _weapon.GetBullet();
             var bullet = Instantiate(bulletPref);
             var bulletController = bullet.GetComponent<BulletController>();
-            bulletController.transform.position = transform.position;
+            // ReSharper disable once PossibleNullReferenceException
+            bulletController.transform.position = _bulletSpawnPlace.transform.position;
+            //transform.position;
 
             var shootVector = new Vector3(_mouseOnScreen.x - _positionOnScreen.x,
                 _mouseOnScreen.y - _positionOnScreen.y, 0);
@@ -121,24 +127,18 @@ namespace Assets.scripts
         public void GetDamage(int damage)
         {
             _playerData.HealthPoint -= damage;
+            if (!IsAlive)
+                Die();
         }
 
         public void Die()
         {
-            _alive = false;
-            _dieScream.Play();
-            SetDeadPic();
-            //StartCoroutine(Dying());
-        }
-
-        private void SetDeadPic()
-        {
-        }
-
-        private IEnumerator Dying()
-        {
-            yield return new WaitForSeconds(_dieScream.clip.length);
-            Destroy(gameObject);
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            _deadPic.SetActive(true);
+            _alivePic.SetActive(false);
+            _audio.clip = _playerData.DieSound;
+            _audio.loop = false;
+            _audio.Play();
         }
     }
 }
