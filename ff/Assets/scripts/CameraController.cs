@@ -9,7 +9,8 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     [SuppressMessage("ReSharper", "UnassignedField.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class CameraController : MonoBehaviour {
+    public class CameraController : MonoBehaviour
+    {
 
         public Transform FollowWhom;
         public float NoMoveShift;

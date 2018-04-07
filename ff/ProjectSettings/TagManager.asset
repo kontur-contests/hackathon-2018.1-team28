@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - player_steps_sound
+  - player_die_scream
   layers:
   - Default
   - TransparentFX
