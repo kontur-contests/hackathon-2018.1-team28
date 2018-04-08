@@ -5,6 +5,7 @@ using System.Linq;
 using Assets.scripts.Helpers;
 using Assets.scripts.Weapons;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.scripts
 {
@@ -144,6 +145,12 @@ namespace Assets.scripts
             _audio.loop = false;
             _audio.mute = false;
             _audio.Play();
+            Invoke(nameof(LoadGameOverScene), 3);
+        }
+
+        private void LoadGameOverScene()
+        {
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
