@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpeed: 0.05
-  Weapon: {fileID: 1289581576073382, guid: 4224e9a86d7616b4389362e5ac9b2d41, type: 2}
+  Weapon: {fileID: 1289581576073382, guid: 9628e71997af2e44d8b5c266588a60ad, type: 2}
 --- !u!114 &114594244031289814
 MonoBehaviour:
   m_ObjectHideFlags: 1
