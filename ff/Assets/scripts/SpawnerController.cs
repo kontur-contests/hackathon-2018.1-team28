@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using UnityEngine;
 
@@ -13,9 +14,10 @@ namespace Assets.scripts
         private int _count;
 
         private GameObject _player;
-        public Transform EnemyPrefab;
+        public List<Transform> EnemyPrefabs;
         public int MaxCount;
         public float SpawnDistance;
+        private Random _rnd;
 
         public void Decrement()
         {
@@ -27,6 +29,7 @@ namespace Assets.scripts
         {
             _player = GameObject.FindGameObjectWithTag("Player");
             _count = 0;
+            _rnd = new Random();
         }
 
         private void Update()
@@ -41,8 +44,15 @@ namespace Assets.scripts
 
         private void Spawn()
         {
-            var enemy = Instantiate(EnemyPrefab, GetPointToSpawn(), Quaternion.identity);
+            var pref = GetEnemy();
+            var enemy = Instantiate(pref, GetPointToSpawn(), Quaternion.identity);
             enemy.GetComponent<EnemyController>().SetSpawner(this);
+        }
+
+        private Transform GetEnemy()
+        {
+            var num = Random.Range(0, EnemyPrefabs.Count);
+            return EnemyPrefabs[num];
         }
 
         private Vector3 GetPointToSpawn()
