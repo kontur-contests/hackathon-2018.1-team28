@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using Assets.scripts.Helpers;
 
 namespace Assets.scripts
 {
@@ -32,10 +33,11 @@ namespace Assets.scripts
 		}
 
         private void FixedUpdate()
-        {
+        {			
 			if (!CheckAlive())
 				return;
-
+			
+			Rotate ();
 			Move();
         }
 
@@ -49,11 +51,16 @@ namespace Assets.scripts
         }
 
 		private void Move()
-		{
+		{			
 			float step = _data.Speed * Time.deltaTime;
 			transform.position = Vector3.MoveTowards (transform.position, _player.transform.position, step);
 		}
-			
+
+		private void Rotate()
+		{
+			var angle = MathHelper.AngleBetweenTwoPoints(_player.transform.position, transform.position);
+			transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		}
 
         private void OnTriggerEnter2D(Collider2D col)
         {
