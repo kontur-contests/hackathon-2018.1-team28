@@ -207,7 +207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowWhom: {fileID: 1339082462}
-  NoMoveShift: 2
+  NoMoveShift: 0
+  MovementResponseSpeed: 5
 --- !u!1 &1166665318
 GameObject:
   m_ObjectHideFlags: 0
