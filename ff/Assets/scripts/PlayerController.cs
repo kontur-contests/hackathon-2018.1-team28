@@ -133,6 +133,7 @@ namespace Assets.scripts
             _alivePic.SetActive(false);
             _audio.clip = _playerData.DieSound;
             _audio.loop = false;
+            _audio.mute = false;
             _audio.Play();
         }
     }
