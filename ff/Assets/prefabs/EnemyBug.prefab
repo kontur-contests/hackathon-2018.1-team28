@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 82412169378802142}
   m_Layer: 0
   m_Name: EnemyBug
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -519,11 +519,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ef002d32970b74e91712983bf55667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 5
+  Damage: 1
   HealthPoint: 5
   MoveSound: {fileID: 8300000, guid: 5fb1b6816e0dda24dafd0368fa7f3328, type: 3}
   DieSound: {fileID: 8300000, guid: 0c7a6734e7435404ea4f1a8de6e0220a, type: 3}
   Speed: 3
+  EnableRotate: 1
 --- !u!212 &212172450063890286
 SpriteRenderer:
   m_ObjectHideFlags: 1

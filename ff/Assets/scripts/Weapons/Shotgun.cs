@@ -28,9 +28,9 @@ namespace Assets.scripts.Weapons
 
         private void ShootOne(Vector3 startPosition, Vector3 shootAngle)
         {
-            var bullet = Instantiate(Bullet);
+            var bullet = Instantiate(Bullet, startPosition,Quaternion.identity);
             var bulletController = bullet.GetComponent<BulletController>();
-            bulletController.transform.position = startPosition;
+            //bulletController.transform.position = startPosition;
             bulletController.ShootAngle = shootAngle;
         }
     }
