@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4383405078174872}
-  - component: {fileID: 114612649513523052}
+  - component: {fileID: 114694395854131192}
   m_Layer: 0
-  m_Name: FlameGun
+  m_Name: WeaponMachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114612649513523052
+--- !u!114 &114694395854131192
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,8 +48,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289581576073382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e588613502d4784ab6f73494b19347e, type: 3}
+  m_Script: {fileID: 11500000, guid: b291f257219ebc248ace08b8492974b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 1198840363044094, guid: f5d8bb22f7d326447a3b97738ccd8044, type: 2}
-  FireDelay: 0.025
+  Bullet: {fileID: 1198840363044094, guid: 2f283162d6dc362438fe4ac1f489da57, type: 2}
+  FireDelay: 0.2

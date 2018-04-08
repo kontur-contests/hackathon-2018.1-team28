@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Assets.scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.scripts
@@ -50,8 +51,8 @@ namespace Assets.scripts
 
 		private void Move()
 		{
-			float step = _data.Speed * Time.deltaTime;
-			transform.position = Vector3.MoveTowards (transform.position, _player.transform.position, step);
+			var step = _data.Speed * Time.deltaTime;
+			transform.position = Vector3.MoveTowards (transform.position, _player.transform.position.ChangeZ(transform.position.z), step);
 		}
 			
 
