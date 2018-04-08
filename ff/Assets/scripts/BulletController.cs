@@ -33,7 +33,6 @@ namespace Assets.scripts
         private void OnTriggerEnter2D(Collider2D col)
         {
             var damagedObject = col.gameObject.GetComponent<IDamageable>();
-            Debug.Log(damagedObject);
             damagedObject?.GetDamage(Damage);
         }
     }

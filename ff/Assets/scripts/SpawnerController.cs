@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using UnityEngine;
 
@@ -8,12 +9,15 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
     public class SpawnerController : MonoBehaviour
     {
         private int _count;
 
+        public GameObject PlayerPrefab;
         private GameObject _player;
-        public Transform EnemyPrefab;
+        public List<Transform> EnemyPrefabs;
         public int MaxCount;
         public float SpawnDistance;
 
@@ -23,9 +27,10 @@ namespace Assets.scripts
                 Interlocked.Decrement(ref _count);
         }
 
-        private void Start()
+        private void Awake()
         {
-            _player = GameObject.FindGameObjectWithTag("Player");
+            _player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
+            GameObject.Find("Main Camera").GetComponent<CameraController>().FollowWhom = _player.transform;
             _count = 0;
         }
 
@@ -41,8 +46,15 @@ namespace Assets.scripts
 
         private void Spawn()
         {
-            var enemy = Instantiate(EnemyPrefab, GetPointToSpawn(), Quaternion.identity);
+            var pref = GetEnemy();
+            var enemy = Instantiate(pref, GetPointToSpawn(), Quaternion.identity);
             enemy.GetComponent<EnemyController>().SetSpawner(this);
+        }
+
+        private Transform GetEnemy()
+        {
+            var num = Random.Range(0, EnemyPrefabs.Count);
+            return EnemyPrefabs[num];
         }
 
         private Vector3 GetPointToSpawn()
