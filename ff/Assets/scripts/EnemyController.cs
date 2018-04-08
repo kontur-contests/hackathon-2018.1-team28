@@ -81,7 +81,6 @@ namespace Assets.scripts
         public void Die()
         {
             Debug.Log("Dead bug");
-            transform.rotation = Quaternion.Euler(Vector3.zero);
             _audio.clip = _data.DieSound;
             _audio.loop = false;
             _audio.Play();
