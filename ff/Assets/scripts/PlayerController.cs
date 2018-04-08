@@ -31,6 +31,7 @@ namespace Assets.scripts
         private GameObject _alivePic;
         private GameObject _deadPic;
         private GameObject _bulletSpawnPlace;
+        private HealthBarHandler _healthBarHandler;
 
         public float PlayerSpeed;
         public GameObject Weapon;
@@ -38,6 +39,7 @@ namespace Assets.scripts
         private void Awake()
         {
             _trans = transform;
+            _healthBarHandler = GetComponentInChildren<HealthBarHandler>();
             _bulletSpawnPlace = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("bulletSpawn"))?.gameObject;
             _alivePic = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("alive"))?.gameObject;
             _deadPic = GetComponentsInChildren<Transform>().FirstOrDefault(tr => tr.CompareTag("dead"))?.gameObject;
@@ -78,6 +80,8 @@ namespace Assets.scripts
 
         private void FixedUpdate()
         {
+            UpdateHealthBar();
+
             if (!IsAlive)
                 return;
 
@@ -86,10 +90,15 @@ namespace Assets.scripts
             Rotate();
         }
 
+        private void UpdateHealthBar()
+        {
+            _healthBarHandler.UpdateHealth(_playerData.HealthPoint,_playerData.HealthPointMax);
+        }
+
         private void Rotate()
         {
             var angle = MathHelper.AngleBetweenTwoPoints(_mouseOnScreen, _positionOnScreen);
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            _alivePic.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private void Move()

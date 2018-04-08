@@ -11,6 +11,7 @@ namespace Assets.scripts
     public class PlayerData : MonoBehaviour
     {
         public int HealthPoint;
+        public int HealthPointMax;
         public AudioClip MoveSound;
         public AudioClip DieSound;
         public bool IsAlive => HealthPoint > 0;

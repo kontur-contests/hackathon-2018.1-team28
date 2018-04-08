@@ -17,5 +17,6 @@ namespace Assets.scripts
 
         public bool IsAlive => HealthPoint > 0;
 		public float Speed;
+        public bool EnableRotate;
     }
 }

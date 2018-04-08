@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114558521990435078}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,5 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 4754435666651996, guid: dd88c7cc8069d5a48bf53206454494b5,
     type: 2}
-  MaxCount: 10
+  MaxCount: 1
   SpawnDistance: 10

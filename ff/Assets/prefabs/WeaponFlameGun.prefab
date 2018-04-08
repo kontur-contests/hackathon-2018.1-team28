@@ -52,4 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1198840363044094, guid: f5d8bb22f7d326447a3b97738ccd8044, type: 2}
-  FireDelay: 0.025
+  FireDelay: 0.005
