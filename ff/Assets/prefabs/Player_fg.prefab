@@ -546,8 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b84457a53ff9704bb9a72e303c332f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthPoint: 15
-  HealthPointMax: 15
+  HealthPoint: 5
+  HealthPointMax: 5
   MoveSound: {fileID: 8300000, guid: 4f9ff1959ef86184baee61cac530f36c, type: 3}
   DieSound: {fileID: 8300000, guid: 024d296af81bade48bbebeb1c35c0252, type: 3}
 --- !u!212 &212409338300091800
