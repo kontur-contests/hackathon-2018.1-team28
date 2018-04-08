@@ -13,7 +13,6 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class CameraController : MonoBehaviour
     {
-
         public Transform FollowWhom;
         public float NoMoveShift;
 		public float MovementResponseSpeed = 1;
@@ -27,6 +26,9 @@ namespace Assets.scripts
 
         private void FixedUpdate()
         {
+            if (FollowWhom == null)
+                return;
+
             ShiftX();
             ShiftY();
             CheckEscapeButton();

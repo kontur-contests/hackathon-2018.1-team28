@@ -9,15 +9,17 @@ namespace Assets.scripts
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
     public class SpawnerController : MonoBehaviour
     {
         private int _count;
 
+        public GameObject PlayerPrefab;
         private GameObject _player;
         public List<Transform> EnemyPrefabs;
         public int MaxCount;
         public float SpawnDistance;
-        private Random _rnd;
 
         public void Decrement()
         {
@@ -25,11 +27,11 @@ namespace Assets.scripts
                 Interlocked.Decrement(ref _count);
         }
 
-        private void Start()
+        private void Awake()
         {
-            _player = GameObject.FindGameObjectWithTag("Player");
+            _player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
+            GameObject.Find("Main Camera").GetComponent<CameraController>().FollowWhom = _player.transform;
             _count = 0;
-            _rnd = new Random();
         }
 
         private void Update()
