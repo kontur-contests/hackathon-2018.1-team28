@@ -72,7 +72,7 @@ namespace Assets.scripts
         {
             _data.HealthPoint -= damage;
             Debug.Log(_data.HealthPoint);
-            if (IsAlive)
+            if (!IsAlive)
             {
                 Die();
             }                
@@ -81,11 +81,10 @@ namespace Assets.scripts
         public void Die()
         {
             Debug.Log("Dead bug");
-            transform.rotation = Quaternion.Euler(Vector3.zero);
             _audio.clip = _data.DieSound;
             _audio.loop = false;
             _audio.Play();
-            Destroy(gameObject, TimeSpan.FromSeconds(1).Ticks);
+            Destroy(gameObject, TimeSpan.FromSeconds(1).Ticks);            
         }
     }
 }
