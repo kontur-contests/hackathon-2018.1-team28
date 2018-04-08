@@ -7,12 +7,13 @@ namespace Assets.scripts.Weapons
     [PublicAPI]
     [SuppressMessage("ReSharper", "UnassignedField.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class Pistol : MonoBehaviour, IWeapon
+    public class FlameGun : MonoBehaviour, IWeapon
     {
+
         public GameObject Bullet;
         public float FireDelay;
 
-        public float GetFireDelay()=>FireDelay;
+        public float GetFireDelay() => FireDelay;
 
         public GameObject GetBullet() => Bullet;
 

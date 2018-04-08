@@ -16,5 +16,6 @@ namespace Assets.scripts
         public AudioClip DieSound;
 
         public bool IsAlive => HealthPoint > 0;
+		public float Speed;
     }
 }

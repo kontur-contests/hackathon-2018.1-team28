@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Assets.scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.scripts
@@ -13,36 +14,64 @@ namespace Assets.scripts
         private EnemyData _data;
         private AudioSource _audio;
         private bool IsAlive => _data.IsAlive;
+		private GameObject _player;
+		private float _moveX;
+		private float _moveY;
 
         private void Awake()
         {
-            _trans = transform;
             _data = GetComponent<EnemyData>();
+			_player = GameObject.FindGameObjectWithTag("Player");
             _audio = GetComponent<AudioSource>();
             _audio.clip = _data.MoveSound;
             _audio.Play();
         }
 
-        private void FixedUpdate()
-        {
-            if (!IsAlive)
-                return;
+		private void Update()
+		{
 
-            CheckAlive();
+		}
+
+        private void FixedUpdate()
+        {			
+			if (!CheckAlive())
+				return;
+			
+			Rotate ();
+			Move();
         }
 
-        private void CheckAlive()
+		private bool CheckAlive()
         {
             if (IsAlive)
-                return;
+				return true;
 
             Die();
+			return false;
         }
+
+		private void Move()
+		{			
+			var step = _data.Speed * Time.deltaTime;
+			transform.position = Vector3.MoveTowards (transform.position, _player.transform.position.ChangeZ(transform.position.z), step);
+		}
+
+		private void Rotate()
+		{
+			var angle = MathHelper.AngleBetweenTwoPoints(_player.transform.position, transform.position);
+			transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		}
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            var damagedObject = col.gameObject.GetComponent<IDamageable>();
-            damagedObject?.GetDamage(_data.Damage);
+			if (IsAlive)
+			{
+				var damagedObject = col.gameObject.GetComponent<IDamageable> ();
+			    if (damagedObject != null && !col.gameObject.CompareTag("Enemy"))
+			    {
+			        damagedObject.GetDamage(_data.Damage);
+                }
+			}
         }
 
         public void GetDamage(int damage)

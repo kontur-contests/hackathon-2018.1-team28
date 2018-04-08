@@ -14,6 +14,7 @@ namespace Assets.scripts
 
         public Transform FollowWhom;
         public float NoMoveShift;
+		public float MovementResponseSpeed = 1;
 
         private Transform _trans;
 
@@ -33,7 +34,7 @@ namespace Assets.scripts
             if (!(Mathf.Abs(_trans.position.x - FollowWhom.position.x) > NoMoveShift))
                 return;
 
-            var xpos = Mathf.Lerp(_trans.position.x, FollowWhom.position.x, Time.deltaTime);
+			var xpos = Mathf.Lerp(_trans.position.x, FollowWhom.position.x, Time.deltaTime * MovementResponseSpeed);
             _trans.position = _trans.position.ChangeX(xpos);
         }
         private void ShiftY()
@@ -41,7 +42,7 @@ namespace Assets.scripts
             if (!(Mathf.Abs(_trans.position.y - FollowWhom.position.y) > NoMoveShift))
                 return;
 
-            var ypos = Mathf.Lerp(_trans.position.y, FollowWhom.position.y, Time.deltaTime);
+			var ypos = Mathf.Lerp(_trans.position.y, FollowWhom.position.y, Time.deltaTime * MovementResponseSpeed);
             _trans.position = _trans.position.ChangeY(ypos);
         }
     }
