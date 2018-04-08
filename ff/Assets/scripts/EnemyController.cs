@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Assets.scripts.Helpers;
 using UnityEngine;
-using Assets.scripts.Helpers;
 
 namespace Assets.scripts
 {
