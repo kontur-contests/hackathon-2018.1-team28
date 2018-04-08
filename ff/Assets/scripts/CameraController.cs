@@ -2,6 +2,8 @@
 using Assets.scripts.Helpers;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.scripts
 {
@@ -27,6 +29,15 @@ namespace Assets.scripts
         {
             ShiftX();
             ShiftY();
+            CheckEscapeButton();
+        }
+
+        private void CheckEscapeButton()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            }
         }
 
         private void ShiftX()
