@@ -16,6 +16,7 @@ namespace Assets.scripts
         private AudioSource _audio;
         private bool IsAlive => _data.IsAlive;
 		private GameObject _player;
+        private SpawnerController _spawner;
 		private float _moveX;
 		private float _moveY;
 
@@ -23,6 +24,7 @@ namespace Assets.scripts
         {
             _data = GetComponent<EnemyData>();
 			_player = GameObject.FindGameObjectWithTag("Player");
+            _spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnerController>();
             _audio = GetComponent<AudioSource>();
             _audio.clip = _data.MoveSound;
             _audio.Play();
@@ -84,7 +86,8 @@ namespace Assets.scripts
             _audio.clip = _data.DieSound;
             _audio.loop = false;
             _audio.Play();
-            Destroy(gameObject, TimeSpan.FromSeconds(1).Ticks);            
+            Destroy(gameObject, 1);
+            _spawner.Decrement();
         }
     }
 }
