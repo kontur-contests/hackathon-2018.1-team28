@@ -57,6 +57,8 @@ namespace Assets.scripts
             _rotating = false;
             _canShot = true;
 
+
+
             //Invoke(nameof(Die), 1);
         }
 

@@ -15,7 +15,8 @@ namespace Assets.scripts
     {
         private int _count;
 
-        public GameObject PlayerPrefab;
+        public List<GameObject> PlayerPrefabs;
+        public List<GameObject> PlayerWeapons;
         private GameObject _player;
         public List<Transform> EnemyPrefabs;
         public int MaxCount;
@@ -29,7 +30,11 @@ namespace Assets.scripts
 
         private void Awake()
         {
-            _player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
+            var difficult = GlobalGameState.GetInstance().Difficult;
+            Debug.Log($"difficult={difficult}");
+            _player = Instantiate(PlayerPrefabs[difficult-1], Vector3.zero, Quaternion.identity);
+            //_player.GetComponent<PlayerController>().Weapon = PlayerWeapons[difficult - 1];
+
             GameObject.Find("Main Camera").GetComponent<CameraController>().FollowWhom = _player.transform;
             _count = 0;
         }
