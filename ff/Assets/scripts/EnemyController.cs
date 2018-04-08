@@ -64,10 +64,13 @@ namespace Assets.scripts
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-			if (IsAlive) 
+			if (IsAlive)
 			{
 				var damagedObject = col.gameObject.GetComponent<IDamageable> ();
-				damagedObject?.GetDamage (_data.Damage);
+			    if (damagedObject != null && !col.gameObject.CompareTag("Enemy"))
+			    {
+			        damagedObject.GetDamage(_data.Damage);
+                }
 			}
         }
 
