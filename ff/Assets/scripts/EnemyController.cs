@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Assets.scripts.Helpers;
 using UnityEngine;
 
@@ -41,14 +42,7 @@ namespace Assets.scripts
 			Move();
         }
 
-		private bool CheckAlive()
-        {
-            if (IsAlive)
-				return true;
-
-            Die();
-			return false;
-        }
+        private bool CheckAlive() => IsAlive;
 
 		private void Move()
 		{			
@@ -78,16 +72,20 @@ namespace Assets.scripts
         {
             _data.HealthPoint -= damage;
             Debug.Log(_data.HealthPoint);
-            if (!IsAlive)
+            if (IsAlive)
+            {
                 Die();
+            }                
         }
 
         public void Die()
         {
+            Debug.Log("Dead bug");
             transform.rotation = Quaternion.Euler(Vector3.zero);
             _audio.clip = _data.DieSound;
             _audio.loop = false;
             _audio.Play();
+            Destroy(gameObject, TimeSpan.FromSeconds(1).Ticks);
         }
     }
 }
