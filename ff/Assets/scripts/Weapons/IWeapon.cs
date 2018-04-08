@@ -6,5 +6,6 @@ namespace Assets.scripts.Weapons
     {
         float GetFireDelay();
         GameObject GetBullet();
+        void Shoot(Vector3 startPosition, Vector3 shootAngle);
     }
 }

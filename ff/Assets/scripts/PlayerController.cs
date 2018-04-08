@@ -61,7 +61,7 @@ namespace Assets.scripts
         {
             if (!IsAlive)
                 return;
-            
+
             // calc move data
             _moveX = Input.GetAxis("Horizontal") * PlayerSpeed;
             _moveY = Input.GetAxis("Vertical") * PlayerSpeed;
@@ -108,16 +108,11 @@ namespace Assets.scripts
 
         public IEnumerator Shoot()
         {
-            var bulletPref = _weapon.GetBullet();
-            var bullet = Instantiate(bulletPref);
-            var bulletController = bullet.GetComponent<BulletController>();
-            // ReSharper disable once PossibleNullReferenceException
-            bulletController.transform.position = _bulletSpawnPlace.transform.position;
-            //transform.position;
-
             var shootVector = new Vector3(_mouseOnScreen.x - _positionOnScreen.x,
                 _mouseOnScreen.y - _positionOnScreen.y, 0);
-            bulletController.ShootAngle = Vector3.Normalize(shootVector);
+            var shootAngle = Vector3.Normalize(shootVector);
+
+            _weapon.Shoot(_bulletSpawnPlace.transform.position, shootAngle);
 
             _canShot = false;
             yield return new WaitForSeconds(_weapon.GetFireDelay());

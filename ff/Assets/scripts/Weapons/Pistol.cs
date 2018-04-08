@@ -21,5 +21,13 @@ namespace Assets.scripts.Weapons
         {
             return Bullet;
         }
+
+        public void Shoot(Vector3 startPosition, Vector3 shootAngle)
+        {
+            var bullet = Instantiate(Bullet);
+            var bulletController = bullet.GetComponent<BulletController>();
+            bulletController.transform.position = startPosition;
+            bulletController.ShootAngle = shootAngle;
+        }
     }
 }
